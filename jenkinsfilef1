@@ -29,11 +29,11 @@ pipeline {
                 sh "sudo cp /var/lib/jenkins/workspace/jenkinsfilef12_feature-1/target/news-app.war /opt/tomcat10/webapps/"
             }
         }
-   stage('Upload Artifact to JFrog') {
-    steps {
-        sh 'mvn deploy'
-    }
-}
+   //stage('Upload Artifact to JFrog') {
+    //steps {
+      //  sh 'mvn deploy'
+    //}
+//}
     }
 }
 
