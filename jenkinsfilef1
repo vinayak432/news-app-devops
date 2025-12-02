@@ -1,8 +1,7 @@
 pipeline {
-    agent any
+    agent java
 
     stages {
-       
         stage('checkout') {
             steps {
                 sh "rm -rf news-app-devops"
@@ -19,11 +18,21 @@ pipeline {
                 sh "mvn test"
             }
         }
- //    stage('version build') {
-   //         steps {
-     //           sh "mvn "
-       //     }
-        //}
+    stage('version build') {
+    steps {
+                script {
+                    // Example: version = 1.0.<BUILD_NUMBER>
+                    def version = "1.0.${env.BUILD_NUMBER}"
+                    echo "Setting project version to ${version}"
+                    
+                    // Update pom.xml version
+                    sh "mvn versions:set -DnewVersion=${version}"
+                    
+                    // Build with new version
+                    sh "mvn clean package"
+                }
+            }
+        }
          stage('deploy tomcat') {
             steps {
                 sh 'sudo cp /var/lib/jenkins/workspace/jenkinsfilef12_feature-1/target/news-app.war /opt/tomcat10/webapps/'
