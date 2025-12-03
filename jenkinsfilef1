@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // let Jenkins manage checkout in workspace root
-                git url: 'https://github.com/vinayak432/news-app-devops.git'
+                sh "rm -rf news-app-devops"
+                sh "git clone 'https://github.com/vinayak432/news-app-devops.git'"
             }
         }
 
@@ -18,9 +18,14 @@ pipeline {
                     sh """
                       cd ${env.WORKSPACE}
                       mvn versions:set -DnewVersion=${version}
-                      mvn clean package
+                     // mvn clean package
                     """
                 }
+            }
+        }
+ stage(' build') {
+            steps {
+                sh "mvn clean package"
             }
         }
 
