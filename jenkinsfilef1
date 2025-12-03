@@ -18,17 +18,12 @@ pipeline {
                     sh """
                       cd ${env.WORKSPACE}
                       mvn versions:set -DnewVersion=${version}
-                     // mvn clean package
+                      mvn clean package
                     """
                 }
             }
         }
- stage(' build') {
-            steps {
-                sh "mvn clean package"
-            }
-        }
-
+ 
         stage('Test') {
             steps {
                 sh "cd ${env.WORKSPACE} && mvn test"
@@ -47,7 +42,7 @@ pipeline {
 
                   echo 'Restarting Tomcat'
                   sudo /opt/tomcat10/bin/shutdown.sh || true
-                  sleep 5
+                  sleep 2
                   sudo /opt/tomcat10/bin/startup.sh
                 """
             }
