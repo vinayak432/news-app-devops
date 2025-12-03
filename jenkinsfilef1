@@ -63,7 +63,7 @@ stage('Push the artifacts into Jfrog Artifactory') {
             )
         }
     }
-
+}
 
 }
     }
